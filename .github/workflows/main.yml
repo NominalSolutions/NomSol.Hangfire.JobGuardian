@@ -49,16 +49,16 @@ jobs:
 
       - name: Update version in .csproj
         run: |
-          sed -i 's/<Version>*<\/Version>/<Version>${{ steps.set_version.outputs.new_version }}<\/Version>/' ./NomSol.Hangfire.JobGuardian/NomSol.Hangfire.JobGuardian.csproj
+          sed -i 's/<Version>*<\/Version>/<Version>${{ steps.set_version.outputs.new_version }}<\/Version>/' ./src/NomSol.Hangfire.JobGuardian/NomSol.Hangfire.JobGuardian.csproj
 
       - name: Restore dependencies
-        run: dotnet restore ./NomSol.Hangfire.JobGuardian/NomSol.Hangfire.JobGuardian.csproj
+        run: dotnet restore ./src/NomSol.Hangfire.JobGuardian/NomSol.Hangfire.JobGuardian.csproj
   
       - name: Build the project
-        run: dotnet build ./NomSol.Hangfire.JobGuardian/NomSol.Hangfire.JobGuardian.csproj --configuration Release --no-restore
+        run: dotnet build ./src/NomSol.Hangfire.JobGuardian/NomSol.Hangfire.JobGuardian.csproj --configuration Release --no-restore
   
       - name: Pack NuGet package
-        run: dotnet pack ./NomSol.Hangfire.JobGuardian/NomSol.Hangfire.JobGuardian.csproj --configuration Release --no-build --output ./nupkgs
+        run: dotnet pack ./src/NomSol.Hangfire.JobGuardian/NomSol.Hangfire.JobGuardian.csproj --configuration Release --no-build --output ./nupkgs
 
       - name: Publish to NuGet
         env:
