@@ -42,7 +42,7 @@ namespace NomSol.Hangfire.JobGuard.Attributes
                     return;
                 }
 
-                if (inQ[0].Value.Job.Type.Name == "SchedulerService")
+                if (inQ[0].Value.Job.Type.Name == "SchedulerService" || inQ[0].Value.Job.Type.Name == "SchedulerBusiness")
                 {
                     isDuplicate = inQ.Skip(1).Any(x => x.Value.Job.Args[2]?.ToString() == jobName);
                 }
