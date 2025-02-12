@@ -35,20 +35,32 @@ namespace NomSol.Hangfire.JobGuard.Attributes
                 var monitoringApi = JobStorage.Current.GetMonitoringApi();
                 var inQ = monitoringApi.ProcessingJobs(0, int.MaxValue);
 
-                bool isDuplicate = inQ.Any(job =>
-                    job.Value.Job.Args[2]?.ToString() == jobName); // Compare job names
+                bool isDuplicate = false;
+
+                if(inQ.Count == 0)
+                {
+                    return;
+                }
+
+                if (inQ[0].Value.Job.Type.Name == "SchedulerService")
+                {
+                    isDuplicate = inQ.Skip(1).Any(x => x.Value.Job.Args[2]?.ToString() == jobName);
+                }
+                else
+                {
+                    isDuplicate = inQ.Any(x => x.Value.Job.Args[2]?.ToString() == jobName);
+                }
 
                 if (isDuplicate)
                 {
                     if (Helpers.Helpers.IsHangfireTagsInstalled())
                     {
-                        string tag = "DeletedByJobGuard";
+                        string tag = "DeletedByJobGuardian";
 
                         using (var tran = context.Connection.CreateWriteTransaction())
                         {
                             if (!(tran is JobStorageTransaction))
                                 throw new NotSupportedException(" Storage transactions must implement JobStorageTransaction");
-
 
                             var score = DateTime.Now.Ticks;
 
