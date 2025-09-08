@@ -6,7 +6,7 @@
 	<GeneratePackageOnBuild>false</GeneratePackageOnBuild>
 	<Authors>Jermy Hernandez</Authors>
 	<Company>Nominal Solutions LLC</Company>
-	<Version>1.0.2</Version>
+	<Version>1.0.3</Version>
 	<Description>JobGuardian for Hangfire is a custom job filter that prevents duplicate jobs from being enqueued by checking for existing jobs with the same name in the processing queue.</Description>
 	<Copyright />
 	<PackageProjectUrl>https://github.com/NominalSolutions/NomSol.Hangfire.JobGuardian</PackageProjectUrl>
@@ -21,8 +21,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Hangfire.Core" Version="1.8.17" />
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="Hangfire.Core" Version="1.8.21" />
   </ItemGroup>
 
 </Project>
